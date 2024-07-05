@@ -26,12 +26,23 @@ jobs:
         echo "SHA: ${{ github.sha }}"
         docker images
 
+
+    - name: Debug Docker username
+      run: |
+        echo "Docker username first letter: ${DOCKER_USERNAME:0:1}"
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+
     - name: Tag Docker image
       run: |
-        docker tag sunday:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/sunday:${{ github.sha }}
-        echo "Tagging completed"
+        echo "Tagging image as ${DOCKER_USERNAME}/sunday:${{ github.sha }}"
+        docker tag sunday:${{ github.sha }} ${DOCKER_USERNAME}/sunday:${{ github.sha }}
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
     - name: Push Docker image
       run: |
-        echo "Pushing image ${{ secrets.DOCKER_USERNAME }}/sunday:${{ github.sha }}"
-        docker push ${{ secrets.DOCKER_USERNAME }}/sunday:${{ github.sha }}
+        echo "Pushing image ${DOCKER_USERNAME}/sunday:${{ github.sha }}"
+        docker push ${DOCKER_USERNAME}/sunday:${{ github.sha }}
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
