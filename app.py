@@ -26,7 +26,7 @@ def morning_task(name, number):
 def main():
     app = create_app()
     scheduler = BackgroundScheduler()
-    scheduler.add_job(morning_task(app.config["TEST_NAME"], app.config["TEST_NUMBER"]), 'cron', hour=10, minute=0)
+    #scheduler.add_job(morning_task(app.config["TEST_NAME"], app.config["TEST_NUMBER"]), 'cron', hour=10, minute=0)
     scheduler.start()
     morning_task(app.config["TEST_NAME"], app.config["TEST_NUMBER"])
     logging.info("Scheduler started and Flask app initialized")
