@@ -20,7 +20,18 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Push Docker image
+    - name: Debug info
+      run: |
+        echo "Image name: sunday"
+        echo "SHA: ${{ github.sha }}"
+        docker images
+
+    - name: Tag Docker image
       run: |
         docker tag sunday:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/sunday:${{ github.sha }}
+        echo "Tagging completed"
+
+    - name: Push Docker image
+      run: |
+        echo "Pushing image ${{ secrets.DOCKER_USERNAME }}/sunday:${{ github.sha }}"
         docker push ${{ secrets.DOCKER_USERNAME }}/sunday:${{ github.sha }}
