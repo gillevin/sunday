@@ -10,6 +10,6 @@ COPY . .
 EXPOSE 8000
 
 # Create log directory
-RUN mkdir -p /home/LogFiles && chmod 777 /home/LogFiles
+RUN mkdir -p /tmp/log && chmod 777 /tmp/log
 
-CMD ["python", "-u", "app.py"]
+CMD ["sh", "-c", "python -u app.py & sleep 10 && ls -l /tmp/log && tail -f /tmp/log/application.log"]
