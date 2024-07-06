@@ -2,6 +2,7 @@ import logging
 import sys
 from flask import Flask, jsonify
 from app import create_app
+from app.utils.whatsapp_utils import send_message
 
 # Set up logging to both file and stdout
 logging.basicConfig(
@@ -20,7 +21,8 @@ def create():
     @app.route('/', methods=['GET'])
     def hello():
         logging.info("GET / endpoint called")
-        return jsonify({"message": "Hello, World!"})
+        send_message("test")
+        return jsonify({"message": "Hello, World2!"})
 
     @app.route('/hello', methods=['POST'])
     def hello_post():
