@@ -1,8 +1,10 @@
 import logging
 import sys
-from flask import Flask, jsonify
+import os
+from flask import jsonify
 from app import create_app
 from app.utils.whatsapp_utils import send_message
+from dotenv import load_dotenv
 
 # Set up logging to both file and stdout
 logging.basicConfig(
@@ -17,6 +19,8 @@ logging.basicConfig(
 
 def create():
     app = create_app()
+    load_dotenv()
+    RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 
     @app.route('/', methods=['GET'])
     def hello():
@@ -29,7 +33,7 @@ def create():
     @app.route('/hello', methods=['POST'])
     def hello_post():
         logging.info("POST /hello endpoint called")
-        return jsonify({"message": "Hello, World from POST!"})
+        return jsonify({"message": f"Hello, World from POST! {RECIPIENT_WAID}"})
 
     return app
 
