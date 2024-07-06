@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from flask import jsonify, request
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -25,6 +26,12 @@ def morning_task(name, number):
 
 def main():
     app = create_app()
+
+    # Add the new POST endpoint
+    @app.route('/hello', methods=['POST'])
+    def hello_world():
+        return jsonify({"message": "Hello, World!"})
+
     scheduler = BackgroundScheduler()
     #scheduler.add_job(morning_task(app.config["TEST_NAME"], app.config["TEST_NUMBER"]), 'cron', hour=10, minute=0)
     scheduler.start()
