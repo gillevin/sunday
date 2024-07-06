@@ -21,8 +21,10 @@ def create():
     @app.route('/', methods=['GET'])
     def hello():
         logging.info("GET / endpoint called")
-        send_message("test")
-        return jsonify({"message": "Hello, World2!"})
+        wapp_output = send_message("test")
+        return jsonify({"wapp_output": wapp_output.text})
+    #    return jsonify({"message": "Hello, World2!"})
+
 
     @app.route('/hello', methods=['POST'])
     def hello_post():
