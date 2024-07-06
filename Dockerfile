@@ -9,4 +9,9 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["python", "app.py"]
+# Add these lines for debugging
+RUN pwd
+RUN ls -la
+RUN cat app.py
+
+CMD ["python", "-u", "app.py"]
