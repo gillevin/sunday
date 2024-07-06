@@ -2,9 +2,15 @@ import logging
 import sys
 from flask import Flask, jsonify
 
-# Set up logging to stdout
-logging.basicConfig(stream=sys.stdout, level=logging.INFO,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# Set up logging to both file and stdout
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("/home/LogFiles/application.log"),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
 
 def create_app():
@@ -31,5 +37,4 @@ if __name__ == "__main__":
 else:
     logging.info("Flask app imported, not running directly")
 
-# Add this line at the end of the file
 logging.info("app.py module loaded")

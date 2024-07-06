@@ -9,9 +9,7 @@ COPY . .
 
 EXPOSE 8000
 
-# Add these lines for debugging
-RUN pwd
-RUN ls -la
-RUN cat app.py
+# Create log directory
+RUN mkdir -p /home/LogFiles && chmod 777 /home/LogFiles
 
 CMD ["python", "-u", "app.py"]
