@@ -11,7 +11,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("/tmp/log/application.log"),
+        logging.FileHandler(os.getenv("LOG_FILE")),
         logging.StreamHandler(sys.stdout)
     ]
 )
@@ -27,8 +27,6 @@ def create():
         logging.info("GET / endpoint called")
         wapp_output = send_message("test")
         return jsonify({"wapp_output": wapp_output.text})
-    #    return jsonify({"message": "Hello, World2!"})
-
 
     @app.route('/hello', methods=['POST'])
     def hello_post():

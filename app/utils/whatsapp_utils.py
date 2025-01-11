@@ -5,7 +5,7 @@ import re
 
 import requests
 from dotenv import load_dotenv
-from flask import current_app, jsonify
+from flask import jsonify
 
 from app.services.openai_service import generate_llm_response
 
@@ -89,6 +89,7 @@ def process_whatsapp_message(body):
     message = body["entry"][0]["changes"][0]["value"]["messages"][0]
     message_body = message["text"]["body"]
 
+    logging.info(f"Processing wapp message: waid: {wa_id}, name: {name}, message: {message}, body: {body}")
     llm_response = generate_llm_response(message_body, wa_id, name)
 
     send_message(llm_response)
