@@ -10,7 +10,6 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 OPENAI_ASSISTANT_ID = os.getenv("OPENAI_ASSISTANT_ID")
 client = OpenAI(api_key=OPENAI_API_KEY)
-#client = OpenAI(api_key=current_app.config.get("OPENAI_API_KEY"))
 
 
 # Use context manager to ensure the shelf file is closed properly
@@ -32,7 +31,6 @@ def run_assistant(thread, name):
     run = client.beta.threads.runs.create(
         thread_id=thread.id,
         assistant_id=assistant.id,
-        # instructions=f"You are having a conversation with {name}",
     )
 
     # Wait for completion

@@ -1,37 +1,23 @@
 import logging
-import sys
-import os
-from flask import jsonify
-from app import create_app
+from flask import request, jsonify
 from app.utils.whatsapp_utils import send_message
-from dotenv import load_dotenv
-
-# Set up logging to both file and stdout
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(os.getenv("LOG_FILE")),
-        logging.StreamHandler(sys.stdout)
-    ]
-)
-
+from app import create_app
 
 def create():
     app = create_app()
-    load_dotenv()
-    RECIPIENT_WAID = os.getenv("RECIPIENT_WAID")
 
     @app.route('/', methods=['GET'])
-    def hello():
-        logging.info("GET / endpoint called")
-        wapp_output = send_message("test")
-        return jsonify({"wapp_output": wapp_output.text})
+    def hello_get():
+        logging.debug("GET / endpoint called")
+        return jsonify({"message": f"Hello, World from GET!"})
 
     @app.route('/hello', methods=['POST'])
     def hello_post():
-        logging.info("POST /hello endpoint called")
-        return jsonify({"message": f"Hello, World from POST! {RECIPIENT_WAID}"})
+        logging.debug("POST /hello endpoint called")
+
+        payload = request.json
+        wapp_output = send_message(f"Hi! {payload.get('message', '')}")
+        return jsonify({"wapp_output": wapp_output.text})
 
     return app
 

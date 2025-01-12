@@ -20,7 +20,10 @@ def load_configurations(app):
 
 def configure_logging():
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.DEBUG,
         format="%(asctime)s - %(levelname)s - %(message)s",
-        stream=sys.stdout,
+        handlers=[
+            logging.FileHandler(os.getenv("LOG_FILE")),
+            logging.StreamHandler(sys.stdout)
+        ]
     )
